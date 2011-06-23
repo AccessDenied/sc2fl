@@ -1,7 +1,7 @@
-<script type="text/javascript" src="../scripts/jquery.js"></script>
+<script type="text/javascript" src="<?=base_url().'application/scripts/jquery.js';?>"></script>
 <script src="http://cdn.jquerytools.org/1.2.5/jquery.tools.min.js"></script>
-<script type="text/javascript" src="../scripts/header.js"></script>
-<link rel="stylesheet" type="text/css" href="../css/header.css" />
+<script type="text/javascript" src="<?=base_url().'application/scripts/header.js';?>"></script>
+<link rel="stylesheet" type="text/css" href="<?=base_url().'application/css/header.css';?>" />
 <div id="header">
 	<h2 class="title">Starcraft 2 Fantasy League (Proof of Concept)</h2>
 	<h3 class="title">SkeemEra's Application for WellPlayed.org's Web Developer Position</h3>
