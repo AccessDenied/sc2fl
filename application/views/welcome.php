@@ -3,8 +3,9 @@
 <title></title>
 </head>
 <body>
-<?php include("include/header.php"); ?>
 
-
+<?php foreach ($teamLeagues->result() as $league): ?>
+	<p><?=$league->name?></p>
+<?php endforeach; ?>
 </body>
 </html>
