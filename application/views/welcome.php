@@ -1,11 +1,3 @@
-<html>
-<head>
-<title></title>
-</head>
-<body>
-
 <?php foreach ($teamLeagues->result() as $league): ?>
-	<p><?=$league->name?></p>
+	<?=anchor('teamleague/league/'.$league->league_id, $league->name);?>
 <?php endforeach; ?>
-</body>
-</html>
