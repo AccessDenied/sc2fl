@@ -14,7 +14,8 @@ class Welcome extends CI_Controller
 			$data['user_id']	= $this->tank_auth->get_user_id();
 			$data['username']	= $this->tank_auth->get_username();
 		}
-		$data['teamLeagues'] = $this->db->get('team_league');
+		$this->load->model('teamleague/Team_league');
+		$data['teamLeagues'] = $this->Team_league->get_leagues();
 		$this->template->load('template', 'welcome', $data);
 	}
 }
