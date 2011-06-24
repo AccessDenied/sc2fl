@@ -6,6 +6,7 @@ class Round extends CI_Model {
 	private $player_one;
 	private $player_two;
 	private $winner;
+	private $competitors;
 	
 	public function __construct($id=null, $match_id=null, $player_one=null, $player_two=null, $winner=null) {
 		parent::__construct();
@@ -18,19 +19,19 @@ class Round extends CI_Model {
 	public function get_id() {
 		return $this->id;
 	}
-	public function get_players() {
-		$players = array();
-		$query = $this->db->query("SELECT * FROM player WHERE player_id = ? OR player_id = ?", array($this->player_one, $this->player_two));
-		foreach ($query->result() as $player) {
-			array_push($players, new Player($player->player_id, $player->name, $player->description, $player->team_id));
+	public function get_competitors() {
+		if (!isset($this->competitors)) {
+			$competitors = array();
+			$query = $this->db->query("SELECT * FROM player WHERE player_id = ? OR player_id = ?", array($this->player_one, $this->player_two));
+			foreach ($query->result() as $player) {
+				array_push($competitors, new Player($player->player_id, $player->name, $player->description, $player->team_id));
+			}
+			$this->competitors = $competitors;
 		}
-		return $players;
+		return $this->competitors;
 	}
 	public function get_winner() {
-		$this->db->where('player_id', $this->winner);
-		$query = $this->db->get('player');
-		$player = $query->row();
-		return new Player($player->player_id, $player->name, $player->description, $player->team_id);
+		return $this->winner;
 	}
 }
 ?>

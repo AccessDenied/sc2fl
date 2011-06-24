@@ -1,0 +1,13 @@
+.anchor_league{
+	margin-left:50px;
+	margin-top:50px;
+	display:block;
+	text-decoration:none;
+	font-size:1.2em;
+	font-weight:600;
+}
+#intro{
+	margin-top:50px;
+	border-top:1px solid #ededed;
+	padding:20px 20px 0px 20px;
+}

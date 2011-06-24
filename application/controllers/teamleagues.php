@@ -23,6 +23,7 @@ class TeamLeagues extends CI_Controller
 		
 		$this->load->model('teamleague/Team_league');
 		$this->load->model('teamleague/Match');
+		$this->load->model('teamleague/Round');
 		$this->load->model('Team');
 		$this->load->model('Player');
 		
@@ -37,12 +38,15 @@ class TeamLeagues extends CI_Controller
 			$data['username']	= $this->tank_auth->get_username();
 		}
 		
+		$this->load->model('teamleague/Team_league');
 		$this->load->model('teamleague/Match');
 		$this->load->model('teamleague/Round');
 		$this->load->model('Team');
 		$this->load->model('Player');
 
 		$data['match'] = $this->Match->get_match($this->uri->segment(3));
+		$data['teamLeague'] = $data['match']->get_league();
+		$data['competitors'] = $data['match']->get_competitors();
 		$this->template->load('template', 'teamleagues/match', $data);
 	}
 }

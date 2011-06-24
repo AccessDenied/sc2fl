@@ -1,3 +1,13 @@
+#header{
+position:relative;
+	border-bottom:1px solid #ededed;
+	padding:20px 20px;
+}
+#header .login{
+position:absolute;
+right:20px;
+bottom:35px;
+}
 /* the overlayed element */
 .simple_overlay {
 	

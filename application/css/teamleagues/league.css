@@ -1,0 +1,47 @@
+.match{
+	position:relative;
+	clear:left;
+	border:1px solid #ededed;
+	margin:10px;
+	height:100px;
+}
+.header{
+	position:relative;
+	padding:10px 20px;
+	background:#f4f4f4;
+}
+.anchor_view-match{
+	position:absolute;
+	right:50px;
+	bottom:12px;
+}
+.team{
+	position:relative;
+	width:449px;
+	float:left;
+	padding:10px 20px;
+}
+.result{
+	position:absolute;
+	right:30px;
+	font-size:0.7em;
+}
+.result.WIN{
+	color:green;
+}
+.result.LOSS{
+	color:red;
+}
+.roster{
+	position:absolute;
+	z-index:1;
+	max-width:449px;
+	display:none;
+	background:white;
+	border:1px solid #ededed;
+	padding:10px;
+}
+.player{
+	float:left;
+	width:100px;
+}
