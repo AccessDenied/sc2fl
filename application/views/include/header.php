@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<?=base_url().'application/scripts/jquery.js';?>"></script>
-<script src="http://cdn.jquerytools.org/1.2.5/jquery.tools.min.js"></script>
+<script type="text/javascript" src="<?=base_url().'application/scripts/jquery.tools.min.js';?>"></script>
 <script type="text/javascript" src="<?=base_url().'application/scripts/header.js';?>"></script>
 <link rel="stylesheet" type="text/css" href="<?=base_url().'application/css/header.css';?>" />
 <div id="header">
@@ -9,9 +9,9 @@
 		<?php if (isset($username) && isset($user_id)): ?>
 			Hi, <strong><?php echo $username; ?></strong>! <?php echo anchor('/auth/logout/', 'Logout'); ?>
 		<?php else: ?>
-			<?=anchor('auth/login', 'login', 'rel="#overlay"');?> or <?=anchor('auth/register', 'register');?>
+			<?=anchor('auth/login', 'login',  array('rel'=>'#overlay_login'));?> or <?=anchor('auth/register', 'register');?>
 			<!-- overlayed element -->
-			<div class="simple_overlay" id="overlay">
+			<div id="overlay_login" class="overlay">
 				<!-- the external content is loaded inside this tag -->
 				<div class="contentWrap"></div>
 			</div>

@@ -1,7 +1,7 @@
 $(function() {
 	// if the function argument is given to overlay,
 	// it is assumed to be the onBeforeLoad event listener
-	$("a[rel='#overlay_login']").overlay({
+	$("a[rel='#overlay_fantasy-create']").overlay({
 		mask: 'darkred',
 		effect: 'apple',
 		onBeforeLoad: function() {

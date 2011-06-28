@@ -171,7 +171,7 @@ class Auth extends CI_Controller
 						}
 						unset($data['password']); // Clear password (just for any case)
 
-						redirect('auth/register_confirmation.php');
+						redirect('welcome');
 					}
 				} else {
 					$errors = $this->tank_auth->get_error_message();

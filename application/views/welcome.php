@@ -1,6 +1,54 @@
 <link rel="stylesheet" type="text/css" href="<?=base_url().'application/css/welcome.css';?>" />
+<script type="text/javascript" src="<?=base_url().'application/scripts/welcome.js';?>"></script>
 <?php foreach ($teamLeagues as $league): ?>
-	<?=anchor('teamleagues/league/'.$league->get_id(), $league->get_name(), 'class="anchor_league"');?>
+	<?php $fantasies = $league->get_fantasies();?>
+	<div class="fantasy-league">
+		<?=anchor('teamleagues/league/'.$league->get_id(), $league->get_name(), 'class="anchor_league"');?>
+		<div class="fl-content">
+			<div class="fantasy-auth">
+				<?php if (isset($auth)): ?>
+					<?=anchor('teamleagues/create/'.$league->get_id(), 'Create New Fantasy League', array('rel'=>'#overlay_fantasy-create'))?>
+					<!-- overlayed element -->
+					<div id="overlay_fantasy-create" class="overlay">
+						<!-- the external content is loaded inside this tag -->
+						<div class="contentWrap"></div>
+					</div>
+				<?php else: ?>
+					Please log in to create or participate in a fantasy league.
+				<?php endif; ?>
+			</div>
+			<div class="fantasy-size"><?=sizeOf($fantasies);?> <font size="0.8em">fantasy leagues created</font></div>
+			<div class="statistics">
+				<table class="fantasies">
+					<tr>
+						<th class="name">name</th>
+						<th class="participation">participation</th>
+					</tr>
+				<?php foreach (array_slice($fantasies, 0, (sizeOf($fantasies > 5) ? 5 : sizeOf($fantasies))) as $fantasy):?>
+					<?php $participantIds = $fantasy->get_participant_ids();?>
+					<tr class="fantasy">
+						<td class="name"><?=$fantasy->get_name();?></td>
+						<td class="participation"><?=sizeOf($participantIds);?> of <?=$fantasy->get_user_limit()?></td>
+						<td class="options">
+							<?=anchor('#', 'View', 'class="anchor_fantasy-delete"');?>
+							<?php if (isset($auth)):?>
+								<?php if(in_array($user_id, $participantIds)):?>
+									<?=anchor('#', 'Leave', 'class="anchor_fantasy-leave"');?>
+								<?php else:?>
+									<?=anchor('#', 'Join', 'class="anchor_fantasy-join"');?>
+								<?php endif;?>
+								<?php if($fantasy->get_owner_id() == $user_id):?>
+									<?=anchor('#', 'Delete', 'class="anchor_fantasy-delete"');?>
+								<?php endif;?>						
+							<?php endif;?>
+						</td>
+					</tr>
+				<?php endforeach;?>
+				</table>
+				<?=anchor('teamleagues/league/'.$league->get_id(), 'View All Fantasy Leagues');?>
+			</div>
+		</div>
+	</div>
 <?php endforeach; ?>
 <div id="intro">
 <h2>Introduction</h2>

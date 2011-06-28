@@ -11,3 +11,25 @@
 	border-top:1px solid #ededed;
 	padding:20px 20px 0px 20px;
 }
+.fl-content{
+width:800px;
+position:relative;
+left:100px;
+}
+.fantasy-size{
+position:absolute;
+top:-22px;
+right:0px;
+}
+.fantasies{
+text-align:left;
+}
+.fantasy .participation{
+text-align:center;
+}
+.fantasy .options{
+padding-left:20px;
+}
+.fantasy .name{
+width:200px;
+}

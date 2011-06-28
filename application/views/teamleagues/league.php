@@ -34,4 +34,31 @@
 		<?php endforeach;?>
 	</div>
 <?php endforeach; ?>
+<?php $fantasies = $teamLeague->get_fantasies();?>
+<table class="fantasies">
+	<tr>
+		<th class="name">name</th>
+		<th class="participation">participation</th>
+	</tr>
+	<?php foreach ($fantasies as $fantasy):?>
+	<?php $participantIds = $fantasy->get_participant_ids();?>
+	<tr class="fantasy">
+		<td class="name"><?=$fantasy->get_name();?></td>
+		<td class="participation"><?=sizeOf($participantIds);?> of <?=$fantasy->get_user_limit()?></td>
+		<td class="options">
+			<?=anchor('#', 'View', 'class="anchor_fantasy-delete"');?>
+			<?php if (isset($auth)):?>
+				<?php if(in_array($user_id, $participantIds)):?>
+					<?=anchor('#', 'Leave', 'class="anchor_fantasy-leave"');?>
+				<?php else:?>
+					<?=anchor('#', 'Join', 'class="anchor_fantasy-join"');?>
+				<?php endif;?>
+				<?php if($fantasy->get_owner_id() == $user_id):?>
+					<?=anchor('#', 'Delete', 'class="anchor_fantasy-delete"');?>
+				<?php endif;?>						
+			<?php endif;?>
+		</td>
+	</tr>
+	<?php endforeach;?>
+</table>
 </div>
