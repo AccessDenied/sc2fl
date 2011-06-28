@@ -58,7 +58,7 @@ class Team_league extends CI_Model {
 		$query = $this->db->get('team_fantasy');
 		$fantasies = array();
 		foreach ($query->result() as $fantasy):
-			array_push($fantasies, new Team_fantasy($fantasy->fantasy_id, $fantasy->name, $fantasy->description, $fantasy->date_created, $fantasy->owner_id, $fantasy->user_limit, $fantasy->league_id));
+			array_push($fantasies, new Team_fantasy($fantasy->fantasy_id, $fantasy->date_created, $fantasy->owner_id, $fantasy->name, $fantasy->description, $fantasy->user_limit, $fantasy->league_id));
 		endforeach;
 		return $fantasies;
 	}

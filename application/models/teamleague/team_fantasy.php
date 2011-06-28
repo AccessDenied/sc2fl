@@ -10,7 +10,7 @@ class Team_fantasy extends CI_Model {
 	private $league_id;
 	private $participant_ids;
 	
-	public function __construct($id=null, $name=null, $description=null, $date_created=null, $owner_id=null, $user_limit=null, $league_id=null) {
+	public function __construct($id=null, $date_created=null, $owner_id=null, $name=null, $description=null, $user_limit=null, $league_id=null) {
 		parent::__construct();
 		$this->id=$id;
 		$this->name=$name;
@@ -52,6 +52,12 @@ class Team_fantasy extends CI_Model {
 			$this->participant_ids = $participant_ids;
 		}
 		return $this->participant_ids;
+	}
+	public function get_fantasy($id) {
+		$this->db->where('fantasy_id', $id);
+		$query = $this->db->get('team_fantasy');
+		$fantasy = $query->row();
+		return new Team_fantasy($fantasy->fantasy_id, $fantasy->date_created, $fantasy->owner_id, $fantasy->name, $fantasy->description, $fantasy->user_limit, $fantasy->league_id);
 	}
 }
 ?>

@@ -33,6 +33,9 @@ class TeamLeagues extends CI_Controller
 		$data['matches'] = $data['teamLeague']->get_matches();
 		$this->template->load('template', 'teamleagues/league', $data);
 	}
+	function fantasy() {
+		$this->template->load('template', 'teamleagues/fantasy', null);
+	}
 	function match() {
 		$data = array();
 		if ($this->tank_auth->is_logged_in()) {
@@ -60,6 +63,8 @@ class TeamLeagues extends CI_Controller
 		$this->form_validation->set_rules('userLimit', 'User Limit', 'trim|required|xss_clean|integer');
 		$this->form_validation->set_rules('leagueId', 'Team League ID', 'trim|required|xss_clean|integer');
 		
+		$response = array();
+		
 		if ($this->tank_auth->is_logged_in() && $this->form_validation->run()) { // validation ok
 			$data = array(
 				'date_created'=>date('y-m-d H:i:s'),
@@ -75,14 +80,64 @@ class TeamLeagues extends CI_Controller
 				'fantasy_id'=>$this->db->insert_id(),
 				'user_id'=>$this->tank_auth->get_user_id()
 			);
+			$response['fantasy_id'] = $data['fantasy_id'];
+			echo json_encode($response);
 			$this->db->insert('team_fantasy_participant', $data);
 		} else {
 			if (sizeOf($this->input->post()) > 1) {
-				echo validation_errors();
+				$response['error'] = validation_errors();
+				echo json_encode($response);
 			} else {
 				$data['team_league_id'] = $this->uri->segment(3);
 				$this->load->view('teamleagues/create', $data);
 			}
+		}
+	}
+	function join() {
+		$this->load->model('teamleague/Team_fantasy');
+		$this->load->library('form_validation');
+		$user_id = $this->tank_auth->get_user_id();
+		
+		$fantasy = Team_fantasy::get_fantasy($this->uri->segment(3));
+		$participant_ids = $fantasy->get_participant_ids();
+		
+		if ($this->tank_auth->is_logged_in() && !in_array($user_id, $participant_ids)) { // validation ok
+			$data = array(
+				'fantasy_id'=>$fantasy->get_id(),
+				'user_id'=>$user_id
+			);
+			$this->db->insert('team_fantasy_participant', $data);	
+		}
+	}
+	function delete() {
+		$this->load->model('teamleague/Team_fantasy');
+		$this->load->library('form_validation');
+		$user_id = $this->tank_auth->get_user_id();
+		
+		$fantasy = Team_fantasy::get_fantasy($this->uri->segment(3));
+		$owner_id = $fantasy->get_owner_id();
+		if ($this->tank_auth->is_logged_in() && $owner_id == $user_id) { // validation ok
+			$data = array(
+				'fantasy_id'=>$fantasy->get_id()
+			);
+			$this->db->delete('team_fantasy_participant', $data);
+			$this->db->delete('team_fantasy', $data);
+		}
+	}
+	function leave() {
+		$this->load->model('teamleague/Team_fantasy');
+		$this->load->library('form_validation');
+		$user_id = $this->tank_auth->get_user_id();
+		
+		$fantasy = Team_fantasy::get_fantasy($this->uri->segment(3));
+		$participant_ids = $fantasy->get_participant_ids();
+		
+		if ($this->tank_auth->is_logged_in() && in_array($user_id, $participant_ids)) { // validation ok
+			$data = array(
+				'fantasy_id'=>$fantasy->get_id(),
+				'user_id'=>$user_id
+			);
+			$this->db->delete('team_fantasy_participant', $data);	
 		}
 	}
 }

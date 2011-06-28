@@ -4,18 +4,18 @@ $(function(){
 		var form = $(this)[0];
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:8080/sc2fl/index.php?teamleagues/create",
+			url: "index.php?teamleagues/create",
 			data: {
 				'name':form.name.value, 
 				'desc':form.desc.value, 
 				'userLimit':form.userLimit.value,
 				'leagueId':form.leagueId.value},
-			dataType:'text',
+			dataType:'json',
 			success: function(data, textStatus){
-				if (data) {
-					$("#errors").html(data);
+				if (data.error) {
+					$("#errors").html(data.error);
 				} else {
-					window.location = 'teamleagues/fantasy/'+form.leagueId.value;
+					window.location = 'index.php?teamleagues/fantasy/'+data.fantasy_id;
 				}
 			},
 			error: function(a,b,c) {alert(a.responseText+" "+b+" "+c);}
