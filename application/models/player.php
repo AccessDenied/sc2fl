@@ -28,5 +28,11 @@ class Player extends CI_Model {
 		$team = $query->row();
 		return new Team($team->team_id, $team->name, $team->description);
 	}
+	public function get_player($player_id) {
+		$this->db->where('player_id', $player_id);
+		$query = $this->db->get('player');
+		$row = $query->row();
+		return new Player($row->player_id, $row->name, $row->description, $row->team_id);
+	}
 }
 ?>

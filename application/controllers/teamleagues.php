@@ -29,12 +29,30 @@ class TeamLeagues extends CI_Controller
 		$this->load->model('Team');
 		$this->load->model('Player');
 		
-		$data['teamLeague'] = $this->Team_league->get_league($this->uri->segment(3));
+		$data['teamLeague'] = $this->Team_league->get_league_by_id($this->uri->segment(3));
 		$data['matches'] = $data['teamLeague']->get_matches();
 		$this->template->load('template', 'teamleagues/league', $data);
 	}
 	function fantasy() {
-		$this->template->load('template', 'teamleagues/fantasy', null);
+		$data = array();
+		if ($this->tank_auth->is_logged_in()) {
+			$data['user_id']	= $this->tank_auth->get_user_id();
+			$data['username']	= $this->tank_auth->get_username();
+		}
+		
+		$this->load->model('teamleague/Team_league');
+		$this->load->model('teamleague/Team_fantasy');
+		$this->load->model('teamleague/Statistics');
+		$this->load->model('teamleague/Team_statistics');
+		$this->load->model('teamleague/Player_statistics');
+		$this->load->model('teamleague/Match');
+		$this->load->model('teamleague/Round');
+		$this->load->model('Team');
+		$this->load->model('Player');
+		
+		$data['fantasy'] = $this->Team_fantasy->get_fantasy_by_id($this->uri->segment(3));
+		$data['statistics'] = $this->Team_league->get_league_by_id($data['fantasy']->get_league_id())->get_fantasy_statistics();
+		$this->template->load('template', 'teamleagues/fantasy', $data);
 	}
 	function match() {
 		$data = array();
@@ -98,7 +116,7 @@ class TeamLeagues extends CI_Controller
 		$this->load->library('form_validation');
 		$user_id = $this->tank_auth->get_user_id();
 		
-		$fantasy = Team_fantasy::get_fantasy($this->uri->segment(3));
+		$fantasy = Team_fantasy::get_fantasy_by_id($this->uri->segment(3));
 		$participant_ids = $fantasy->get_participant_ids();
 		
 		if ($this->tank_auth->is_logged_in() && !in_array($user_id, $participant_ids)) { // validation ok
@@ -114,7 +132,7 @@ class TeamLeagues extends CI_Controller
 		$this->load->library('form_validation');
 		$user_id = $this->tank_auth->get_user_id();
 		
-		$fantasy = Team_fantasy::get_fantasy($this->uri->segment(3));
+		$fantasy = Team_fantasy::get_fantasy_by_id($this->uri->segment(3));
 		$owner_id = $fantasy->get_owner_id();
 		if ($this->tank_auth->is_logged_in() && $owner_id == $user_id) { // validation ok
 			$data = array(
@@ -129,7 +147,7 @@ class TeamLeagues extends CI_Controller
 		$this->load->library('form_validation');
 		$user_id = $this->tank_auth->get_user_id();
 		
-		$fantasy = Team_fantasy::get_fantasy($this->uri->segment(3));
+		$fantasy = Team_fantasy::get_fantasy_by_id($this->uri->segment(3));
 		$participant_ids = $fantasy->get_participant_ids();
 		
 		if ($this->tank_auth->is_logged_in() && in_array($user_id, $participant_ids)) { // validation ok
@@ -139,6 +157,25 @@ class TeamLeagues extends CI_Controller
 			);
 			$this->db->delete('team_fantasy_participant', $data);	
 		}
+	}
+	function manage() {
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+		
+		$this->load->model('teamleague/Team_fantasy');
+		$this->load->model('teamleague/Team_league');
+		$this->load->model('Team');
+		$this->load->model('Player');
+		
+		$data = array();
+		if ($this->tank_auth->is_logged_in()) {
+			$data['user_id']	= $this->tank_auth->get_user_id();
+			$data['username']	= $this->tank_auth->get_username();
+		}
+		
+		$data['fantasy'] = Team_fantasy::get_fantasy_by_id($this->uri->segment(3));
+		$data['league'] = Team_league::get_league_by_id($data['fantasy']->get_league_id());
+		$this->load->view('teamleagues/manage', $data);
 	}
 }
 

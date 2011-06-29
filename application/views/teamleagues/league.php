@@ -40,25 +40,25 @@
 		<th class="name">name</th>
 		<th class="participation">participation</th>
 	</tr>
-	<?php foreach ($fantasies as $fantasy):?>
-	<?php $participantIds = $fantasy->get_participant_ids();?>
-	<tr class="fantasy">
-		<td class="name"><?=$fantasy->get_name();?></td>
-		<td class="participation"><?=sizeOf($participantIds);?> of <?=$fantasy->get_user_limit()?></td>
-		<td class="options">
-			<?=anchor('#', 'View', 'class="anchor_fantasy-delete"');?>
-			<?php if (isset($auth)):?>
-				<?php if(in_array($user_id, $participantIds)):?>
-					<?=anchor('#', 'Leave', 'class="anchor_fantasy-leave"');?>
-				<?php else:?>
-					<?=anchor('#', 'Join', 'class="anchor_fantasy-join"');?>
+	<?php foreach (array_slice($fantasies, 0, (sizeOf($fantasies > 5) ? 5 : sizeOf($fantasies))) as $fantasy):?>
+		<?php $participantIds = $fantasy->get_participant_ids();?>
+		<tr class="fantasy">
+			<td class="name"><?=$fantasy->get_name();?></td>
+			<td class="participation"><?=sizeOf($participantIds);?> of <?=$fantasy->get_user_limit()?></td>
+			<td class="options">
+				<?=anchor('teamleagues/fantasy/'.$fantasy->get_id(), 'View', 'class="anchor_fantasy-view"');?>
+				<?php if (isset($auth)):?>
+					<?php if(in_array($user_id, $participantIds)):?>
+						<?=anchor('teamleagues/leave/'.$fantasy->get_id(), 'Leave', 'class="anchor_fantasy-leave"');?>
+					<?php else:?>
+						<?=anchor('teamleagues/join/'.$fantasy->get_id(), 'Join', 'class="anchor_fantasy-join"');?>
+					<?php endif;?>
+					<?php if($fantasy->get_owner_id() == $user_id):?>
+						<?=anchor('teamleagues/delete/'.$fantasy->get_id(), 'Delete', 'class="anchor_fantasy-delete"');?>
+					<?php endif;?>						
 				<?php endif;?>
-				<?php if($fantasy->get_owner_id() == $user_id):?>
-					<?=anchor('#', 'Delete', 'class="anchor_fantasy-delete"');?>
-				<?php endif;?>						
-			<?php endif;?>
-		</td>
-	</tr>
+			</td>
+		</tr>
 	<?php endforeach;?>
 </table>
 </div>
