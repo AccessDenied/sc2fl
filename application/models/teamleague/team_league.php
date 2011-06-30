@@ -27,7 +27,7 @@ class Team_league extends CI_Model {
 			$query = $this->db->get('team_league_match');
 			$matches = array();
 			foreach ($query->result() as $match) {
-				array_push($matches, new Match($match->match_id, $match->team_one, $match->team_two, $match->date_start, $match->league_id, $match->lineup_position, $match->winner));
+				array_push($matches, new Team_match($match->match_id, $match->team_one, $match->team_two, $match->date_start, $match->league_id, $match->lineup_position, $match->winner));
 			}
 			$this->matches = $matches;
 		}
@@ -102,7 +102,7 @@ class Team_league extends CI_Model {
 			}
 			$teams = array();
 			foreach ($teamIds as $teamId) {
-				array_push($teams, Team::get_team($teamId));
+				array_push($teams, $this->Team->get_team($teamId));
 			}
 			$this->teams = $teams;
 		}
@@ -137,7 +137,7 @@ class Team_league extends CI_Model {
 			}
 			$players = array();
 			foreach ($player_ids as $player_id) {
-				array_push($players, Player::get_player($player_id));
+				array_push($players, $this->Player->get_player($player_id));
 			}
 			$this->players = $players;
 		}
@@ -146,7 +146,7 @@ class Team_league extends CI_Model {
 	public function get_fantasy_statistics() {
 		$teams = $this->get_teams();
 		$players = $this->get_players();
-		return new Statistics($this->get_league(), $teams, $players);
+		return new Team_statistics($this->get_league(), $teams, $players);
 	}
 }
 ?>

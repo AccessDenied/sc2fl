@@ -2,45 +2,44 @@
 class Team_statistics extends CI_Model {
 	
 	private $league;
-	private $team;
-	private $wins;
-	private $losses;
+	private $teams;
+	private $players;
+	private $team_statistics;
+	private $player_statistics;
 	
-	public function __construct($league=null, $team=null) {
+	public function __construct($league=null, $teams=null, $players=null) {
 		parent::__construct();
 		$this->league = $league;
-		$this->team = $team;
+		$this->teams = (is_null($teams)?array():$teams);
+		$this->players = (is_null($players)?array():$players);
+		$this->team_statistics = array();
+		$this->player_statistics = array();
 		
-		$this->build_statistics();
+		$this->build_statistics($teams);
+		
 	}
-	public function get_losses() {
-		return $this->losses;
+	public function get_teams() {
+		return $this->teams;
 	}
-	public function get_wins() {
-		return $this->wins;
+	public function get_players() {
+		return $this->players;
 	}
-	public function get_total_points() {
-		return $wins;
+	public function get_league() {
+		return $this->league;
 	}
-	private function build_statistics() {
-		if ((!isset($this->wins) || !isset($this->losses)) && !is_null($this->team)) {
-			$this->wins = 0;
-			$this->losses = 0;
-			$this->db->select('winner');
-			$this->db->where('team_one',$this->team->get_id());
-			$this->db->or_where('team_two',$this->team->get_id());
-			$query = $this->db->get('team_league_match');
-			foreach ($query->result() as $row){
-				if (!is_null($row->winner)) {
-					if ($row->winner == $this->team->get_id()) {
-						$this->wins++;
-					} else {
-						$this->losses++;
-					}
-				}
-			}
+	public function get_team_statistics() {
+		return $this->team_statistics;
+	}
+	public function get_player_statistics() {
+		return $this->player_statistics;
+	}
+	private function build_statistics($teams) {
+		foreach($this->teams as $team) {
+			$this->team_statistics[$team->get_id()] = new Team_team_statistics($this->get_league(), $team);
 		}
-		
+		foreach($this->players as $player) {
+			$this->player_statistics[$player->get_id()] = new Team_player_statistics($this->get_league(), $player);
+		}
 	}
 }
 ?>

@@ -1,0 +1,63 @@
+#table_team-statistics, #table_player-statistics {
+width: 500px;
+float:left;
+text-align:center;
+margin-top:20px;
+}
+#anchor_breadcrumb{
+position:absolute;
+left:10px;
+}
+#anchor_fantasy-manage{
+position:absolute;
+z-index:2;
+top:430px;
+left:150px;
+font-size:2em;
+text-decoration:none;
+display:block;
+}
+#drafted-players{
+position:relative;
+margin-left:30px;
+}
+#drafted-players .title{
+font-weight:bold;
+}
+.drafted-player .name{
+float:left;
+width:150px;
+}
+#drafted-team{
+position:relative;
+margin-left:30px;
+margin-top:25px;
+}
+#drafted-team .title{
+font-weight:bold;
+}
+#drafted-team .name{
+float:left;
+width:150px;
+}
+#total-points{
+position:absolute;
+top:490px;
+left:300px;
+}
+#total-points .title{
+font-weight:bold;
+font-size:1.5em;
+}
+#total-points .points{
+text-align:center;
+font-weight:bold;
+font-size:3em;
+}
+#instructions{
+position:absolute;
+top:430px;
+left:50px;
+font-weight:bold;
+color:#990000;
+}

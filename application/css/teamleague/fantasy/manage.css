@@ -1,0 +1,60 @@
+#player-drafting{
+	position:absolute;
+	left:30px;
+	top:30px;
+	border:1px solid #ccc;
+	width:350px;
+	height:390px;
+}
+#player-drafting select{
+	margin:10px 0px 0px 10px;
+}
+#player-draft-selection{
+	margin-left:15px;
+	font-size:1.1em;
+}
+#player-draft-selection .player{
+	margin:2px 0px;
+}
+.player.ACTIVE:hover{
+	color:blue;
+	cursor:pointer;
+}
+.player.UNACTIVE{
+	color:#999;
+}
+#instructions{
+	padding:10px;
+}
+#player-draft{
+	position:absolute;
+	right:10px;
+	top:10px;
+	font-size:1.2em;
+}
+#team-drafting{
+	position:absolute;
+	right:30px;
+	top:30px;
+	border:1px solid #ccc;
+	width:150px;
+	height:390px;
+}
+.player-draft{
+	font-weight:bold;
+	margin:10px 0px;
+}
+
+input[type=submit]{
+	position:absolute;
+	right:40px;
+	top:390px;
+}
+.team-title{
+	text-align:center;
+	font-size:1.2em;
+}
+.owned-by{
+margin-left:5px;
+color:#ccc;
+}

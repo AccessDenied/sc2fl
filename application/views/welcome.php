@@ -3,11 +3,11 @@
 <?php foreach ($teamLeagues as $league): ?>
 	<?php $fantasies = $league->get_fantasies();?>
 	<div class="fantasy-league">
-		<?=anchor('teamleagues/league/'.$league->get_id(), $league->get_name(), 'class="anchor_league"');?>
+		<?=anchor('teamleague/league/'.$league->get_id(), $league->get_name(), 'class="anchor_league"');?>
 		<div class="fl-content">
 			<div class="fantasy-auth">
 				<?php if (isset($auth)): ?>
-					<?=anchor('teamleagues/create/'.$league->get_id(), 'Create New Fantasy League', array('rel'=>'#overlay_fantasy-create'))?>
+					<?=anchor('teamleague/fantasy/create/'.$league->get_id(), 'Create New Fantasy League', array('rel'=>'#overlay_fantasy-create'))?>
 					<!-- overlayed element -->
 					<div id="overlay_fantasy-create" class="overlay">
 						<!-- the external content is loaded inside this tag -->
@@ -30,22 +30,22 @@
 						<td class="name"><?=$fantasy->get_name();?></td>
 						<td class="participation"><?=sizeOf($participantIds);?> of <?=$fantasy->get_user_limit()?></td>
 						<td class="options">
-							<?=anchor('teamleagues/fantasy/'.$fantasy->get_id(), 'View', 'class="anchor_fantasy-view"');?>
+							<?=anchor('teamleague/fantasy/'.$fantasy->get_id(), 'View', 'class="anchor_fantasy-view"');?>
 							<?php if (isset($auth)):?>
 								<?php if(in_array($user_id, $participantIds)):?>
-									<?=anchor('teamleagues/leave/'.$fantasy->get_id(), 'Leave', 'class="anchor_fantasy-leave"');?>
+									<?=anchor('teamleague/fantasy/leave/'.$fantasy->get_id(), 'Leave', 'class="anchor_fantasy-leave"');?>
 								<?php else:?>
-									<?=anchor('teamleagues/join/'.$fantasy->get_id(), 'Join', 'class="anchor_fantasy-join"');?>
+									<?=anchor('teamleague/fantasy/join/'.$fantasy->get_id(), 'Join', 'class="anchor_fantasy-join"');?>
 								<?php endif;?>
 								<?php if($fantasy->get_owner_id() == $user_id):?>
-									<?=anchor('teamleagues/delete/'.$fantasy->get_id(), 'Delete', 'class="anchor_fantasy-delete"');?>
+									<?=anchor('teamleague/fantasy/delete/'.$fantasy->get_id(), 'Delete', 'class="anchor_fantasy-delete"');?>
 								<?php endif;?>						
 							<?php endif;?>
 						</td>
 					</tr>
 				<?php endforeach;?>
 				</table>
-				<?=anchor('teamleagues/league/'.$league->get_id(), 'View All Fantasy Leagues');?>
+				<?=anchor('teamleague/league/'.$league->get_id(), 'View All Fantasy Leagues');?>
 			</div>
 		</div>
 	</div>

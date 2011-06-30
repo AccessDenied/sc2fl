@@ -38,6 +38,8 @@
 |
 */
 
+$route['teamleague/league/:num'] = "teamleague/league";
+$route['teamleague/fantasy/:num'] = "teamleague/fantasy";
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 

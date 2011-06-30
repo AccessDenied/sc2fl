@@ -1,0 +1,55 @@
+#teams{
+	float:left;
+	border-bottom:1px solid #ededed;
+}
+.team{
+	padding:20px;
+	float:left;
+	width:460px;
+}
+.team .name{
+	font-size:1.5em;
+}
+
+.player{
+	float:left;
+	width:90px;
+	font-size:0.8em;
+}
+.player.COMPETED{
+	color:blue;
+}
+#rounds{
+	position:relative;
+	top:10px;float:left;
+	left:50%;
+	width:400px;
+	margin-left:-200px;
+}
+.round{
+	width:100%;
+	border:1px solid #ededed;
+	height:30px;
+	padding:10px;
+	margin-bottom:10px;
+}
+.competitor{
+	position:relative;
+	float:left;
+	width:180px;
+}
+.competitor .name{
+	font-size:1.5em;
+	float:left;
+}
+.competitor .result{
+	float:left;
+	margin-left:5px;
+	font-size:0.8em;
+}
+.competitor .result.WIN{
+	color:green;
+}
+.competitor .result.LOSS{
+	color:red;
+}
