@@ -17,7 +17,7 @@ $(function(){
 	});
 	$.ajax({
 		type: "POST",
-		url: "index.php?servlets/fantasy/playerdraft/"+$("#input_fantasy-id").val(),
+		url: "index.php?fantasyleagues/team/draft/players/"+$("#input_fantasy-id").val(),
 		dataType: "json",
 		success: function(data, textStatus){
 			for(var playerId in data) {
@@ -26,6 +26,32 @@ $(function(){
 			}
 		},
 		error: function(a,b,c) {alert(a.responseText+" "+b+" "+c);}
+	});
+	$("#form_fantasy-manage").submit(function(e) {
+		e.preventDefault();
+		var data = {
+			'player_count':getPropertyCount(draft.players),
+			'fantasy_id':$("input[name='fantasy_id']").val()
+		};
+		var count = 0;
+		for(var playerId in draft.players) {
+			data[count]=playerId;
+			count++;
+		}
+		$.ajax({
+			type: "POST",
+			url: "index.php?fantasyleagues/team/draft/manage",
+			data: data,
+			dataType:'json',
+			success: function(data, textStatus){
+				if (data.error) {
+					$("#errors").html(data.error);
+				} else {
+					window.location = 'index.php?teamleagues/fantasy/'+data.fantasy_id;
+				}
+			},
+			error: function(a,b,c) {alert(a.responseText+" "+b+" "+c);}
+		});
 	});
 });
 
@@ -46,12 +72,10 @@ draft.refresh = function() {
 function getPropertyCount(obj) {
     var count = 0,
         key;
-
     for (key in obj) {
         if (obj.hasOwnProperty(key)) {
             count++;
         }
     }
-
     return count;
 }

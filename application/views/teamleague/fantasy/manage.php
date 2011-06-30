@@ -1,5 +1,5 @@
-<script type="text/javascript" src="<?=base_url().'application/scripts/teamleague/fantasy/manage.js';?>"></script>
-<link rel="stylesheet" type="text/css" href="<?=base_url().'application/css/teamleague/fantasy/manage.css';?>" />
+<script type="text/javascript" src="<?=base_url().'scripts/teamleague/fantasy/manage.js';?>"></script>
+<link rel="stylesheet" type="text/css" href="<?=base_url().'css/teamleague/fantasy/manage.css';?>" />
 <?php 
 $team_array = array();
 foreach ($league->get_teams() as $team) {
@@ -11,7 +11,7 @@ foreach ($league->get_teams() as $team) {
 
 <div id="player-drafting">
 	<?=form_dropdown('select_team', $team_array);?>
-	<div id="instructions">Select up to 8 Players</div>
+	<div id="warning">Select up to 8 Players</div>
 	<div id="player-draft-selection">
 	<?php foreach($league->get_teams() as $team):?>
 		<div id="player-list_<?=$team->get_id();?>" class="player-list" style="display:none">
@@ -21,9 +21,9 @@ foreach ($league->get_teams() as $team) {
 		</div>
 	<?php endforeach;?>
 	</div>
-	<div id="player-draft">
+	<div id="player-draft-container">
 		<div class="title">Your Drafted Players</div>
-		<div class="player-drafts"></div>
+		<div id="player-drafts"></div>
 	</div>
 </div>
 <div id="team-drafting">

@@ -23,10 +23,10 @@
 .player.UNACTIVE{
 	color:#999;
 }
-#instructions{
+#warning{
 	padding:10px;
 }
-#player-draft{
+#player-draft-container{
 	position:absolute;
 	right:10px;
 	top:10px;
@@ -40,7 +40,7 @@
 	width:150px;
 	height:390px;
 }
-.player-draft{
+#player-drafts{
 	font-weight:bold;
 	margin:10px 0px;
 }

@@ -6,18 +6,8 @@ $(function(){
 		$(".player-list").hide();
 		$("#player-list_"+$(this).val()).show();
 	});
-	$(".player.ACTIVE").click(function(){
-		if (getUserDraftCount(draft.players) < 8) {
-			var elementId = $(this).attr("id");
-			var id = elementId.substr(elementId.lastIndexOf("_") + 1);
-			var name = $(this).text();
-			if (!draft.players[id]) draft.players[id] = {};
-			draft.players[id]['name'] = name;
-			draft.players[id]['ownerId'] = userId;
-			draft.refresh();
-		} else {
-			alert("Only 8 Players Allowed");
-		}
+	$(".player.ACTIVE").click(function(e){
+		draftPlayer(e.target);
 	});
 	$.ajax({
 		type: "POST",
@@ -53,33 +43,49 @@ $(function(){
 			error: function(a,b,c) {alert(a.responseText+" "+b+" "+c);}
 		});
 	});
-	$(".player-draft").live("click", function(e){
-		var elementId = $(this).attr("id");
-		var id = elementId.substr(elementId.lastIndexOf("_") + 1);
-		delete(draft.players[id]);
-		$("#player_"+id).removeClass("UNACTIVE").addClass("ACTIVE");
-		$("#player_"+id).find(".owned-by").empty();
-		draft.refresh();
-	});
 });
 
 var draft = {};
 draft.refresh = function() {
-	$(".player-drafts").empty();
+	$("#player-drafts").empty();
 	for (var key in draft.players) {
-		$("#player_"+key).removeClass("ACTIVE").addClass("UNACTIVE");
+		$("#player_"+key).removeClass("ACTIVE").addClass("UNACTIVE").unbind('click');
 		if (draft.players[key]['ownerId'] == userId) {
 			var div = document.createElement("div");
 			div.className = "player-draft";
 			div.setAttribute("id","player-draft_"+key);
 			div.appendChild(document.createTextNode(draft.players[key]['name']));
-			$(".player-drafts").append(div);
+			$(div).click(function(e){
+				e.preventDefault();
+				var elementId = $(this).attr("id");
+				var id = elementId.substr(elementId.lastIndexOf("_") + 1);
+				delete(draft.users[draft.players[id]]);
+				delete(draft.players[id]);
+				$("#player_"+id).removeClass("UNACTIVE").addClass("ACTIVE").bind('click', function(e) {
+					draftPlayer(e.target);
+				});
+				$("#player_"+id).find(".owned-by").empty();
+				draft.refresh();
+			});
+			$("#player-drafts").append(div);
 		}
 		if (draft.users[draft.players[key]['ownerId']])
 			$("#player_"+key).find(".owned-by").html(document.createTextNode("owned by:"+draft.users[draft.players[key]['ownerId']]));
 	}
 }
-
+function draftPlayer(target) {
+	if (getUserDraftCount(draft.players) < 8) {
+		var elementId = $(target).attr("id");
+		var id = elementId.substr(elementId.lastIndexOf("_") + 1);
+		var name = $(target).text();
+		if (!draft.players[id]) draft.players[id] = {};
+		draft.players[id]['name'] = name;
+		draft.players[id]['ownerId'] = userId;
+		draft.refresh();
+	} else {
+		alert("Only 8 Players Allowed");
+	}
+}
 function getUserDraftCount(obj) {
     var count = 0, key;
     for (key in obj) {
