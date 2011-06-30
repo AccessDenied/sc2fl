@@ -1,5 +1,5 @@
-<script type="text/javascript" src="<?=base_url().'scripts/teamleague/fantasy/manage.js';?>"></script>
-<link rel="stylesheet" type="text/css" href="<?=base_url().'css/teamleague/fantasy/manage.css';?>" />
+<script type="text/javascript" src="<?=base_url().'application/scripts/teamleague/fantasy/manage.js';?>"></script>
+<link rel="stylesheet" type="text/css" href="<?=base_url().'application/css/teamleague/fantasy/manage.css';?>" />
 <?php 
 $team_array = array();
 foreach ($league->get_teams() as $team) {
